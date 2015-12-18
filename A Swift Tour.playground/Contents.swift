@@ -349,7 +349,7 @@ let optionalSquare: Square? = Square(sideLength: 2.5, name: "optional square")
 let sideLength = optionalSquare?.sideLength
 
 
-
+//使用enum来创建一个枚举。就像类和其他所有命名类型一样，枚举可以包含方法。
 enum Rank: Int {
     case Ace = 1
     case Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten
@@ -370,11 +370,149 @@ enum Rank: Int {
     }
 }
 let ace = Rank.Ace
-let aceRawValue = ace.rawValue
+let aceRawValue = ace.rawValue  //使用rawValue属性来访问一个枚举成员的原始值。
+//在上面的例子中，枚举原始值的类型是Int，所以你只需要设置第一个原始值。剩下的原始值会按照顺序赋值。你也可以使用字符串或者浮点数作为枚举的原始值。
+
+//使用init?(rawValue:)初始化构造器在原始值和枚举值之间进行转换。
+if let convertedRank = Rank(rawValue: 3) {
+    let threeDescription = convertedRank.simpleDescription()
+}
+
+//枚举的成员值是实际值，并不是原始值的另一种表达方法。实际上，以防原始值没有意义，你不需要设置。
+enum Suit {
+    case Spades, Hearts, Diamonds, Clubs
+    func simpleDescription() -> String {
+        switch self {
+        case .Spades:
+            return "spades"
+        case .Hearts:
+            return "hearts"
+        case .Diamonds:
+            return "diamonds"
+        case .Clubs:
+            return "clubs"
+        }
+    }
+}
+let hearts = Suit.Hearts
+let heartsDescription = hearts.simpleDescription()
+//注意，有两种方式可以引用Hearts成员：给hearts常量赋值时，枚举成员Suit.Hearts需要用全名来引用，因为常量没有显式指定类型。在switch里，枚举成员使用缩写.Hearts来引用，因为self的值已经知道是一个suit。已知变量类型的情况下你可以使用缩写。
+
+
+//使用struct来创建一个结构体。结构体和类有很多相同的地方，比如方法和构造器。它们之间最大的一个区别就是结构体是传值，类是传引用。
+struct Card {
+    var rank: Rank
+    var suit: Suit
+    func simpleDescription() -> String {
+        return "The \(rank.simpleDescription()) of \(suit.simpleDescription())"
+    }
+}
+let threeOfSpades = Card(rank: .Three, suit: .Spades)
+let threeOfSpadesDecription = threeOfSpades.simpleDescription()
+
+
+//一个枚举成员的实例可以有实例值。相同枚举成员的实例可以有不同的值。创建实例的时候传入值即可。实例值和原始值是不同的：枚举成员的原始值对于所有实例都是相同的，而且你是在定义枚举的时候设置原始值。
+enum ServerResponse {
+    case Result(String, String)
+    case Error(String)
+}
+
+let success = ServerResponse.Result("6:00 am", "8:09 pm")
+let failure = ServerResponse.Error("Out of cheese.")
+
+switch success {
+case let .Result(sunrise, sunset):
+    let serverResponse = "Sunrise is at \(sunrise) and sunset is at \(sunset)."
+case let .Error(error):
+    let serverResponse = "Failure... \(error)"
+}
+switch failure {
+case let .Result(sunrise, sunset):
+    let serverResponse = "Sunrise is at \(sunrise) and sunset is at \(sunset)."
+case let .Error(error):
+    let serverResponse = "Failure... \(error)"
+}
+
+
+//使用protocol来声明一个协议
+protocol ExampleProtocol {
+    var simpleDescription: String { get }
+    mutating func adjust()
+}
+//类、枚举和结构体都可以实现协议
+class SimpleClass: ExampleProtocol {
+    var simpleDescription: String = "A simple class."
+    var anotherProperty: Int = 69105
+    func adjust() {
+        simpleDescription += "Now 100% adjusted."
+    }
+}
+var a = SimpleClass()
+a.adjust()
+let aDescription = a.simpleDescription
+
+struct SimpleStructure: ExampleProtocol {
+    var simpleDescription: String = "A simple structure"
+    mutating func adjust() {
+        simpleDescription += "(adjusted)"
+    }
+}
+var b = SimpleStructure()
+b.adjust()
+let bDescription = b.simpleDescription
+//注意声明SimpleStructure时候mutating关键字用来标记一个会修改结构体的方法。SimpleClass的声明不需要标记任何方法，因为类中的方法通常可以修改类属性（类的性质）。
+
+
+//使用extension来为现有的类型添加功能，比如新的方法和计算属性。你可以使用扩展在别处修改定义，甚至是从外部库或者框架引入的一个类型，使得这个类型遵循某个协议。
+extension Int: ExampleProtocol {
+    var simpleDescription: String {
+        return "The number \(self)"
+    }
+    mutating func adjust() {
+        self += 42
+    }
+}
+print(7.simpleDescription)
+
+//你可以像使用其他命名类型一样使用协议名——例如，创建一个有不同类型但是都实现一个协议的对象集合。当你处理类型是协议的值时，协议外定义的方法不可用。
+let protocolValue: ExampleProtocol = a
+print(protocolValue.simpleDescription)
+// print(protocolValue.anotherProperty)  // Uncomment to see the error
+//即使protocolValue变量运行时的类型是simpleClass，编译器会把它的类型当做ExampleProtocol。这表示你不能调用类在它实现的协议之外实现的方法或者属性。
 
 
 
+//在尖括号里写一个名字来创建一个泛型函数或者类型
+func repeatItem<Item>(item: Item, numberOfTimes: Int) -> [Item] {
+    var result = [Item]()
+    for _ in 0..<numberOfTimes {
+        result.append(item)
+    }
+    return result
+}
+repeatItem("knock", numberOfTimes: 4)
 
+//也可以创建泛型函数、方法、类、枚举和结构体
+enum OptionalValue<Wrapped> {
+    case None
+    case Some(Wrapped)
+}
+var possibleInteger: OptionalValue<Int> = .None
+possibleInteger = .Some(100)
+
+//在类型名后面使用where来指定对类型的需求，比如，限定类型实现某一个协议，限定两个类型是相同的，或者限定某个类必须有一个特定的父类。
+func anyCommonElements<T:SequenceType, U:SequenceType where T.Generator.Element: Equatable, T.Generator.Element == U.Generator.Element>(Ihs: T, _ rhs: U) -> Bool {
+    for IhsItem in Ihs {
+        for rhsItem in rhs {
+            if IhsItem == rhsItem {
+                return true
+            }
+        }
+    }
+    return false
+}
+anyCommonElements([1, 2, 3], [3])
+//<T: Equatable>和<T where T: Equatable>是等价的
 
 
 

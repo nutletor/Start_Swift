@@ -60,14 +60,47 @@ typealias AudioSample = UInt16
 var maxAmplitudeFound = AudioSample.min
 
 
+//元组(tuples)内的值并不要求是相同类型,可以包含任意顺序所有类型的值。
+let http404Error = (404, "Not Found")
+//http404Error的类型是(Int, String)，值是(404, "Not Found")
 
+//将元组的内容分解成单独的常量和变量
+let (statusCode, statusMessage) = http404Error
+print("The status code is \(statusCode)")
+print("The status message is \(statusMessage)")
+//如果只需要一部分的元组值，可以把忽略的部分用下划线标记
+let (justTheStatusCode, _) = http404Error
+print("The status code is \(justTheStatusCode)")
 
+//此外，你还可以通过下标来访问元组中的单个元素，下标从零开始：
+print("The status code is \(http404Error.0)")
+print("The status message is \(http404Error.1)")
 
+//可以在定义元组的时候给单个元素命名,之后便可通过名字来获取元素的值
+let http200Status = (statusCode: 200, description: "OK")
+print("The status code is \(http200Status.statusCode)")
+print("The status message is \(http200Status.description)")
+//注意：元组在临时组织值的时候很有用，但是并不适合创建复杂的数据结构。如果你的数据结构并不是临时使用，请使用类或者结构体而不是元组。
 
+let possibleNumber = "123"
+let convertedNumber = Int(possibleNumber)
+//convertedNumner被推测为类型"Int?"，或者类型"optional Int"
 
+//可以将可选变量赋值为nil来表示它没有值
+var serverResponseCode: Int? = 404
+serverResponseCode = nil
+//注意：nil不能用于非可选的常量和变量
 
+//如果你声明一个可选常量或者变量但没有赋值，它们会自动被置为nil
+var surveyAnswer: String?
+//在OC中，nil是一个指向不存在对象的指针
+//在Swift中，nil不是指针——它是一个确定的值，用来表示值缺失。任何类型的可选状态都可以被设置为nil，不只是对象类型
 
-
+//当确定可选类型包含值时，可以使用感叹号(!)将可选值强制解析
+if convertedNumber != nil {
+    print("convertedNumber has an integer value of \(convertedNumber!)")
+}
+print(convertedNumber!)//可选值强制解析后不再是可选类型
 
 
 

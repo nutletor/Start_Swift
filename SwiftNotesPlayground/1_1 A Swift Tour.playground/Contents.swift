@@ -2,7 +2,8 @@
 
 import UIKit
 
-var str = "Hello, playground"
+//Swift初见(A Swift Tour)
+
 
 var myVariable = 42
 myVariable = 50

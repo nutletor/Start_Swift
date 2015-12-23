@@ -2,6 +2,9 @@
 
 import UIKit
 
+//基础部分(The Basics)
+
+
 var str = "Hello, playground"
 print(str)
 print(str, terminator: "")
@@ -100,20 +103,55 @@ var surveyAnswer: String?
 if convertedNumber != nil {
     print("convertedNumber has an integer value of \(convertedNumber!)")
 }
+print(convertedNumber)
 print(convertedNumber!)//可选值强制解析后不再是可选类型
 
 
+//可选绑定(optional binding)来判断可选类型是否包含值，如果包含就把值赋给一个临时常量或者变量。可选绑定可以用在if和while语句中。
+if let actualNumber = Int(possibleNumber) {
+    print("\'\(possibleNumber)\' has an integer value of \(actualNumber)")
+} else {
+    print("\'\(possibleNumber)\' could not be converted to an integer")
+}
+//如果转换成功，actualNumber常量可以在if语句的第一个分支中使用。它已经被可选类型包含的值初始化过，所以不需要再使用!后缀来获取它的值
+
+//可以包含多个可选绑定在if语句中，并使用where子句做布尔值判断
+if let firstNumber = Int("4"), secondNumber = Int("42") where firstNumber < secondNumber {
+print("\(firstNumber) < \(secondNumber)")
+}
+
+//一个隐式解析可选类型其实就是一个普通的可选类型，但是可以被当做非可选类型来使用，并不需要每次都使用解析来获取可选值。
+//可选类型String和隐式解析可选类型String之间的区别：
+let possibleString: String? = "An optional string."
+let forcedString: String = possibleString! // 需要惊叹号来获取值
+
+let assumedString: String! = "An implicitly unwrapped optional string."
+let implicitString: String = assumedString  // 不需要感叹号
+//注意：如果一个变量之后可能变成nil的话请不要使用隐式解析可选类型。如果你需要在变量的生命周期中判断是否是nil的话，请使用普通可选类型。
 
 
+//可以使用错误处理(error handling)来应对程序执行中可能会遇到的错误条件
+func canThrowAnError() throws {
+    //这个函数有可能抛出错误
+}
+//一个函数可以通过在声明中添加throws关键词来抛出错误消息。当你的函数能抛出错误消息时，你应该在表达式中前置try关键词
+do {
+    try canThrowAnError()
+    //没有错误消息抛出
+} catch {
+    //有一个错误消息抛出
+}
+//一个do语句创建了一个新的包含作用域，使得错误能被传播到一个或多个catch从句
 
 
+//断言(assertion)调试
+let age = -3
+//assert(age >= 0, "A person's age cannot be less than zero")
+assert(age < 0)
+//如果表达式的结果为false，断言被触发，终止应用
+//注意：当代码使用优化编译的时候，断言将会被禁用，例如在 Xcode 中，使用默认的 target Release 配置选项来 build 时，断言会被禁用。
 
-
-
-
-
-
-
-
-
-
+//断言的适用情景:
+//•整数类型的下标索引被传入一个自定义下标脚本实现,但是下标索引值可能太小或者太大
+//•需要给函数传入一个值,但是非法的值可能导致函数不能正常执行
+//•一个可选值现在是 nil ,但是后面的代码运行需要一个非 nil 值

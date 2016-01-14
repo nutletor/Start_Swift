@@ -150,18 +150,51 @@ case let (x, y):
 //return
 //throw
 
+//循环语句中的 continue
+let puzzleInput = "great minds think alike"
+var puzzleOutput = ""
+for character in puzzleInput.characters {
+    switch character {
+    case "a", "e", "i", "o", "u", " ":
+        continue //立即停止本次循环，重新开始下次for循环，不会执行switch后的代码
+    default:
+            puzzleOutput.append(character)
+    }
+    print(1)
+}
+print(puzzleOutput)
 
+//switch中的 break
+puzzleOutput = ""
+for character in puzzleInput.characters {
+    switch character {
+    case "a", "e", "i", "o", "u", " ":
+        break //立即中断switch代码块的执行，跳转到switch外的代码，并不会影响switch外的for循环
+    default:
+        puzzleOutput.append(character)
+    }
+    print(1)
+}
+print(puzzleOutput)
 
+//循环语句中的 break
+//当在一个循环体中使用break时，会立刻中断该循环体的执行，然后跳转到表示循环体结束的大括号(})后的第一行代码。不会再有本次循环迭代的代码被执行，也不会再有下次的循环迭代产生
 
+//贯穿（Fallthrough）
+let integerToDescribe = 5
+var description = "The number \(integerToDescribe) is"
+switch integerToDescribe {
+case 2, 3, 5, 7, 11, 13, 17, 19:
+    description += " a prime number, and also"
+    fallthrough //fallthrough只会落入下一个case，若要连续贯穿必须添加多个fallthrough
+//case 0:
+//    description
+default:
+    description += " an integer."
+}
+print(description)
 
-
-
-
-
-
-
-
-
+//使用标签来标记一个循环体或者switch代码块，当使用break或者continue时带上该标签，显式地指明break语句想要终止的是哪个循环体或者switch代码块。continue同理。
 
 
 

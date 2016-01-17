@@ -194,17 +194,39 @@ default:
 }
 print(description)
 
+//带标签的语句
 //使用标签来标记一个循环体或者switch代码块，当使用break或者continue时带上该标签，显式地指明break语句想要终止的是哪个循环体或者switch代码块。continue同理。
+//gameLoop: while square != finalSquare {
+//    if ++diceRoll == 7 { diceRoll = 1 }
+//    switch square + diceRoll {
+//    case finalSquare:
+//        // 到达最后一个方块，游戏结束
+//        break gameLoop
+//    case let newSquare where newSquare > finalSquare:
+//        // 超出最后一个方块，再掷一次骰子
+//        continue gameLoop
+//    default:
+//        // 本次移动有效
+//        square += diceRoll
+//        square += board[square]
+//    }
+//}
 
-
-
-
-
-
-
-
-
-
+//提前退出
+//使用guard语句来要求条件必须为真时，以执行guard语句后的代码。
+func greet(person:[String: String]) {
+    guard let name = person["name"] else {
+        return
+    }
+    print("Hello \(name)")
+    
+    guard let location = person["location"] else {
+    print("I hope the weather is nice near you.")
+    return
+    }
+    print("I hope the weather is nice in \(location).")
+}
+greet(["name": "John"])
 
 
 

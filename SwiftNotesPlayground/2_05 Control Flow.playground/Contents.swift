@@ -227,17 +227,18 @@ func greet(person:[String: String]) {
     print("I hope the weather is nice in \(location).")
 }
 greet(["name": "John"])
+//greet(["location": "Cupertino"])
+//任何使用了可选绑定作为条件的一部分并被分配了值的变量或常量对于剩下的保护语句出现的代码段是可用的。
+//如果条件不被满足，在else分支上的代码就会被执行。这个分支必须转移控制以退出guard语句出现的代码段。它可以用控制转移语句如return,break,continue或者throw做这件事，或者调用一个不返回的方法或函数，例如fatalError()。
 
-
-
-
-
-
-
-
-
-
-
+//检测API可用性
+if #available(iOS 9, OSX 10.10, *) {
+    //在iOS使用iOS9的API，在OSX使用OSXv10.10的API
+} else {
+    //使用先前版本的iOS和OSX的API
+}
+//以上可用性条件指定了在 iOS 系统上，if段的代码仅会在 iOS 9 及更高版本的系统上执行；在 OS X，仅会在 OS X v10.10 及更高版本的系统上执行。最后一个参数，*，是必须写的，用于处理未来潜在的平台。
+//在它的一般形式中，可用性条件获取了一系列平台名字和版本。平台名字可以是iOS，OSX或watchOS。除了特定的主板本号像 iOS 8，我们可以指定较小的版本号像 iOS 8.3 以及 OS X v10.10.3。
 
 
 

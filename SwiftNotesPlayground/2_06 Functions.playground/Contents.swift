@@ -37,23 +37,23 @@ sayGoodbye("Dave")
 
 
 //多重返回值函数
-func minMax(array: [Int]) -> (min: Int, max: Int) {
-    var currentMin = array[0]
-    var currentMax = array[0]
-    for value in array[1..<array.count] {
-        if value < currentMin {
-            currentMin = value
-        } else if value > currentMax {
-            currentMax = value
-        }
-    }
-    return (currentMin, currentMax)
-}
-let bounds = minMax([8, -6, 2, 109, 3, 71])
-bounds.min
-bounds.0
-bounds.max
-bounds.1
+//func minMax(array: [Int]) -> (min: Int, max: Int) {
+//    var currentMin = array[0]
+//    var currentMax = array[0]
+//    for value in array[1..<array.count] {
+//        if value < currentMin {
+//            currentMin = value
+//        } else if value > currentMax {
+//            currentMax = value
+//        }
+//    }
+//    return (currentMin, currentMax)
+//}
+//let bounds = minMax([8, -6, 2, 109, 3, 71])
+//bounds.min
+//bounds.0
+//bounds.max
+//bounds.1
 
 //可选元组返回类型
 //注意：可选元组类型如(Int, Int)?与元组包含可选类型如(Int?, Int?)是不同的.可选的元组类型，整个元组是可选的，而不只是元组中的每个元素值。
@@ -76,5 +76,95 @@ func minMax(array: [Int]) -> (min: Int, max: Int)? {
 if let bounds = minMax([8, -6, 2, 109, 3, 71]) {
     print("min is \(bounds.min) and max is \(bounds.max)")
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

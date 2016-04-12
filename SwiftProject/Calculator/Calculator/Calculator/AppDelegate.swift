@@ -1,9 +1,9 @@
 //
 //  AppDelegate.swift
-//  SwiftProject
+//  Calculator
 //
-//  Created by THN-Huangfei on 15/12/21.
-//  Copyright © 2015年 JD-Huangfei. All rights reserved.
+//  Created by HuangFei on 16/4/12.
+//  Copyright © 2016年 HuangFei. All rights reserved.
 //
 
 import UIKit
